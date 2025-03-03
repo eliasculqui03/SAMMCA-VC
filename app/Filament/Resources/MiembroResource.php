@@ -15,6 +15,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class MiembroResource extends Resource
 {
@@ -32,7 +33,7 @@ class MiembroResource extends Resource
 
                         Section::make('Datos generales')
                             ->schema([
-                                Forms\Components\TextInput::make('nombre')
+                                Forms\Components\TextInput::make('nombre_miembro')
                                     ->required()
                                     ->columnSpanFull()
                                     ->maxLength(255),
@@ -56,11 +57,12 @@ class MiembroResource extends Resource
                                     ->maxLength(255)
                                     ->default(null),
                                 Forms\Components\TextInput::make('correo')
-                                    ->maxLength(255)
+                                    ->email()
                                     ->default(null),
                                 Forms\Components\TextInput::make('direccion')
                                     ->maxLength(255)
                                     ->default(null),
+
                             ])
                             ->columns(2)
                             ->columnSpan(1),
@@ -76,6 +78,10 @@ class MiembroResource extends Resource
                             ->required(),
                         Forms\Components\DatePicker::make('final_periodo')
                             ->required(),
+                        Forms\Components\RichEditor::make('informacion')
+                            ->label('Información')
+                            ->fileAttachmentsDirectory('informacion')
+                            ->columnSpanFull(),
                     ])
                     ->columns(3),
                 Forms\Components\Toggle::make('estado')
@@ -87,7 +93,7 @@ class MiembroResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('nombre_miembro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipoDocumento.descripcion_corta')
                     ->label('T. de documento'),
@@ -104,10 +110,12 @@ class MiembroResource extends Resource
                 Tables\Columns\IconColumn::make('estado')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('F. de creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('F. de actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -124,6 +132,7 @@ class MiembroResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    ExportBulkAction::make(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

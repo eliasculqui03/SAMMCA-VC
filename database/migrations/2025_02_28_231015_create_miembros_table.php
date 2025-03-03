@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('miembros', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('nombre_miembro');
             $table->unsignedBigInteger('tipo_documento_id');
             $table->string('numero_documento')->unique();
             $table->integer('edad')->nullable();
             $table->string('telefono')->nullable();
             $table->string('correo')->nullable();
             $table->string('direccion')->nullable();
+            $table->text('informacion')->nullable();
             $table->unsignedBigInteger('cargo_id');
             $table->date('inicio_periodo');
             $table->date('final_periodo');
