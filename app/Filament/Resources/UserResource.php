@@ -79,6 +79,11 @@ class UserResource extends Resource
                                     ->avatar()
                                     ->directory('usuarios')
                                     ->imageEditor(),
+                                Forms\Components\Select::make('roles')
+                                    ->relationship('roles', 'name')
+                                    ->multiple()
+                                    ->preload()
+                                    ->searchable(),
 
                             ])->columnSpan(1)
                     ])->columns(2),
