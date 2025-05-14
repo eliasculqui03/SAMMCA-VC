@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\EcComponente;
+use App\Livewire\PhEcComponente;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/vista-ec', PhEcComponente::class)->name('vista-ec');

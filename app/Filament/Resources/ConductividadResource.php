@@ -18,7 +18,10 @@ class ConductividadResource extends Resource
 {
     protected static ?string $model = Conductividad::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Registro de datos';
+    //protected static ?int $navigationSort = 1;
+
+    //protected static ?string $navigationIcon = 'heroicon-o-eye-dropper';
 
     public static function form(Form $form): Form
     {

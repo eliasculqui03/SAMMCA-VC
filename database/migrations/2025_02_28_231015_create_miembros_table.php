@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('tipo_documento_id')->references('id')->on('tipo_documentos')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('cargo_Id')->references('id')->on('cargos')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('cargo_id')->references('id')->on('cargos')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

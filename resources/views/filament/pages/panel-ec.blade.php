@@ -1,3 +1,4 @@
 <x-filament-panels::page>
-    <livewire:calidad-agua>
+
+    <livewire:ec-componente>
 </x-filament-panels::page>

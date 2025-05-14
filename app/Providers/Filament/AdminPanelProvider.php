@@ -8,6 +8,8 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -27,6 +29,9 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->sidebarFullyCollapsibleOnDesktop()
+            //->topNavigation()
+            ->maxContentWidth('full')
             ->id('admin')
             ->path('/')
             ->login()
@@ -58,11 +63,33 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets12')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
                 ConductividadWidget::class,
                 PhWidget::class,
             ])
+
+            ->topNavigation()
+
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Registro de datos')
+                    ->icon('heroicon-o-newspaper'),
+                NavigationGroup::make()
+                    ->label('Configuración')
+                    ->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make()
+                    ->label('Shop')
+                    ->icon('heroicon-o-shopping-cart'),
+
+            ])
+            ->userMenuItems([
+                'profile' => MenuItem::make()->label('Editar perfil')
+                    ->url(config('filament.path') . '/profile')
+                    ->icon('heroicon-o-user-circle'),
+                // ...
+            ])
+            ->sidebarWidth('40rem')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
